@@ -9,14 +9,14 @@ import com.example.ordersystem.Orders.OrderService;
 import com.example.ordersystem.Products.Product;
 import com.example.ordersystem.Products.ProductService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class ShopController {
     private final ProductService productService;
-    private OrderService orderService;
+    private final OrderService orderService;
     
-    public ShopController(ProductService productService) {
-        this.productService = productService;
-    }
     @GetMapping("/product/byName/{name}")
     Product getProductByName(@PathVariable String name){
         return productService.getPrdByName(name);            
@@ -26,7 +26,7 @@ public class ShopController {
     Product getProduct(@PathVariable String id) {
         return productService.getProduct(id);
     }
-    
+
     @GetMapping("/product/list")
     List<Product> listProducts(){
         return productService.listProducts();
@@ -42,8 +42,10 @@ public class ShopController {
         return orderService.listOrders();
     }    
     @PostMapping("/orders")
-    void addOrder(Order order) {
-        
+    void addOrder(@RequestBody String[] OrderedProducts) {
+        List<Product> OrderedProds = Arrays.stream(OrderedProducts).map(r-> productService.getPrdByName(r)).toList();
+
+        orderService.addOrder(new Order(OrderedProds));
     }
 
     Order getOrder(String id) {
