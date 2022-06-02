@@ -1,13 +1,13 @@
-package com.example;
+package com.example.ordersystem.Products;
 
-import java.util.*;
+import java.util.UUID;
 
-public class fruit implements products {
+public class thing {
     private String name;
     private final String id = UUID.randomUUID().toString();
 
 
-    fruit(String name) {
+    thing(String name) {
         this.name = name;
     }
     public String getId() {
@@ -18,3 +18,4 @@ public class fruit implements products {
         return this.name;
     }
 }
+
