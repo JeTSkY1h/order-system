@@ -40,12 +40,11 @@ public class ShopController {
     @GetMapping("/orders/list")
     List<Order> listOrders(){
         return orderService.listOrders();
-    }    
+    }
+
     @PostMapping("/orders")
     void addOrder(@RequestBody String[] OrderedProducts) {
-        List<Product> OrderedProds = Arrays.stream(OrderedProducts).map(r-> productService.getPrdByName(r)).toList();
-
-        orderService.addOrder(new Order(OrderedProds));
+        orderService.addOrder(OrderedProducts);
     }
 
     Order getOrder(String id) {
